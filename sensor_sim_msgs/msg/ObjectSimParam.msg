@@ -1,0 +1,14 @@
+int16 id
+string name
+string topic_name
+string parent_frame_id
+float64 length
+float64 width
+float64 height
+float64 pos_x
+float64 pos_y
+float64 pos_z
+float64 roll
+float64 pitch
+float64 yaw
+std_msgs/ColorRGBA color

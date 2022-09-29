@@ -10,7 +10,7 @@ from sensor_sim_ui_object_form import Ui_ObjectForm
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import ColorRGBA
-from dmn_msgs.msg import SimulationParam, LidarSimParam, ObjectSimParam
+from sensor_sim_msgs.msg import SimulationParam, LidarSimParam, ObjectSimParam
 
 
 class  ObjectForm(QtWidgets.QWidget, Ui_ObjectForm):

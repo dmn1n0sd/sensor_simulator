@@ -56,8 +56,8 @@
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl/filters/crop_box.h>
 
-#include "dmn_msgs/msg/simulation_param.hpp"
-#include "dmn_msgs/msg/lidar_sim_param.hpp"
+#include "sensor_sim_msgs/msg/simulation_param.hpp"
+#include "sensor_sim_msgs/msg/lidar_sim_param.hpp"
 
 Eigen::Vector3d rotate_rpy( double input_x, double input_y, double input_z, double roll, double pitch, double yaw );
 Eigen::Vector3d homogeneous_transform( Eigen::Vector3d src, double trans_x, double trans_y, double trans_z, double roll, double pitch, double yaw );
@@ -69,7 +69,7 @@ class SimObject
         SimObject();
         ~SimObject();
         void timer_callback();
-        void set_param( const dmn_msgs::msg::ObjectSimParam osp );
+        void set_param( const sensor_sim_msgs::msg::ObjectSimParam osp );
 #if 0
         std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
         std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
@@ -142,7 +142,7 @@ class LidarSimulator
         LidarSimulator();
         ~LidarSimulator();
         void timer_callback();
-        void set_param( const dmn_msgs::msg::LidarSimParam lsp );
+        void set_param( const sensor_sim_msgs::msg::LidarSimParam lsp );
 #if 1
         std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
         std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
@@ -203,16 +203,16 @@ class SensorSimulator : public rclcpp::Node
         ~SensorSimulator();
     private :
         void simulate_sensors();
-        void param_cb( const dmn_msgs::msg::SimulationParam::SharedPtr &msg  );
+        void param_cb( const sensor_sim_msgs::msg::SimulationParam::SharedPtr &msg  );
         void timer_callback();
         void add_lidar( std::string topic_name );
-        void add_lidar( const dmn_msgs::msg::LidarSimParam lsp );
-        void add_object( const dmn_msgs::msg::ObjectSimParam osp );
+        void add_lidar( const sensor_sim_msgs::msg::LidarSimParam lsp );
+        void add_object( const sensor_sim_msgs::msg::ObjectSimParam osp );
         void tf_broadcast();
         std::vector< std::shared_ptr<LidarSimulator> > lidars_;
         std::vector< std::shared_ptr<SimObject> > objects_;
         rclcpp::Clock clock_;
-        rclcpp::Subscription<dmn_msgs::msg::SimulationParam>::SharedPtr subscription_;
+        rclcpp::Subscription<sensor_sim_msgs::msg::SimulationParam>::SharedPtr subscription_;
         std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
         std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
         std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;

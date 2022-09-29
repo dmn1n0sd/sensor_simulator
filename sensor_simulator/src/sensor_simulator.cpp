@@ -63,7 +63,7 @@ void SimObject::timer_callback()
 }
 #endif
 
-void SimObject::set_param( const dmn_msgs::msg::ObjectSimParam osp )
+void SimObject::set_param( const sensor_sim_msgs::msg::ObjectSimParam osp )
 {
     id_ = osp.id;
     frame_id_ = osp.name;
@@ -187,9 +187,9 @@ SensorSimulator::SensorSimulator()
 
     timer_ = this->create_wall_timer(1ms, std::bind(&SensorSimulator::timer_callback, this));
 
-    //subscription_ = this->create_subscription<dmn_msgs::msg::SimulationParam>("sim_param", 1, std::bind(&SensorSimulator::param_cb, this, _1));
-    subscription_ = this->create_subscription<dmn_msgs::msg::SimulationParam>
-        ("/simulation_param", 1, [this](dmn_msgs::msg::SimulationParam::SharedPtr msg) { param_cb(msg); } );
+    //subscription_ = this->create_subscription<sensor_sim_msgs::msg::SimulationParam>("sim_param", 1, std::bind(&SensorSimulator::param_cb, this, _1));
+    subscription_ = this->create_subscription<sensor_sim_msgs::msg::SimulationParam>
+        ("/simulation_param", 1, [this](sensor_sim_msgs::msg::SimulationParam::SharedPtr msg) { param_cb(msg); } );
 }
 
 SensorSimulator::~SensorSimulator()
@@ -205,7 +205,7 @@ void SensorSimulator::add_lidar( std::string topic_name )
     lidars_.push_back(ls);
 }
 
-void SensorSimulator::add_lidar( const dmn_msgs::msg::LidarSimParam lsp )
+void SensorSimulator::add_lidar( const sensor_sim_msgs::msg::LidarSimParam lsp )
 {
     std::shared_ptr<LidarSimulator> ls(new LidarSimulator());
     ls->set_param( lsp );
@@ -219,7 +219,7 @@ void SensorSimulator::add_lidar( const dmn_msgs::msg::LidarSimParam lsp )
     lidars_.push_back(ls);
 }
 
-void SensorSimulator::add_object( const dmn_msgs::msg::ObjectSimParam osp )
+void SensorSimulator::add_object( const sensor_sim_msgs::msg::ObjectSimParam osp )
 {
     std::shared_ptr<SimObject> os(new SimObject());
     os->publisher_ = this->create_publisher<visualization_msgs::msg::Marker>(osp.topic_name.c_str(), 1);
@@ -235,9 +235,9 @@ void SensorSimulator::add_object( const dmn_msgs::msg::ObjectSimParam osp )
 }
 
 
-void SensorSimulator::param_cb( const dmn_msgs::msg::SimulationParam::SharedPtr &msg )
+void SensorSimulator::param_cb( const sensor_sim_msgs::msg::SimulationParam::SharedPtr &msg )
 {
-    std::vector<dmn_msgs::msg::ObjectSimParam>::iterator iter_osp;
+    std::vector<sensor_sim_msgs::msg::ObjectSimParam>::iterator iter_osp;
     std::vector<std::shared_ptr<SimObject> >::iterator iter_os;
 
     objects_marker_array_.markers.clear();
@@ -262,7 +262,7 @@ void SensorSimulator::param_cb( const dmn_msgs::msg::SimulationParam::SharedPtr 
         }
     }
 
-    std::vector<dmn_msgs::msg::LidarSimParam>::iterator iter_lsp;
+    std::vector<sensor_sim_msgs::msg::LidarSimParam>::iterator iter_lsp;
     std::vector<std::shared_ptr<LidarSimulator> >::iterator iter_ls;
 
     for (iter_lsp=msg->lidar_params.begin(); iter_lsp!=msg->lidar_params.end(); ++iter_lsp)

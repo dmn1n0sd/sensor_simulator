@@ -164,7 +164,7 @@ void LidarSimulator::timer_callback()
 }
 #endif
 
-void LidarSimulator::set_param( const dmn_msgs::msg::LidarSimParam lsp )
+void LidarSimulator::set_param( const sensor_sim_msgs::msg::LidarSimParam lsp )
 {
     id_ = lsp.id;
     frame_id_ = lsp.name;

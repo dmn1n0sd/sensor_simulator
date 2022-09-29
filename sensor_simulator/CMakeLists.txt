@@ -33,7 +33,7 @@ find_package(std_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
-find_package(dmn_msgs REQUIRED)
+find_package(sensor_sim_msgs REQUIRED)
 
 set(CMAKE_BUILD_TYPE Release)
 
@@ -56,7 +56,7 @@ set(dependencies
   sensor_msgs
   tf2_ros
   tf2
-  dmn_msgs
+  sensor_sim_msgs
 )
 
 add_executable(${executable_name}
